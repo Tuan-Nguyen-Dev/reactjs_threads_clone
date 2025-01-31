@@ -7,8 +7,11 @@ export const authSlices = createSlice({
         isAuthenticated: false,
     },
     reducers: {
-        updateStatus: (state, action) => {
+        updateAuthStatus: (state, action) => {
             state.isAuthenticated = action.payload
         }
     }
 });
+
+
+export const { updateAuthStatus } = authSlices.actions

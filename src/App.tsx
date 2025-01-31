@@ -1,16 +1,19 @@
-import React from "react";
+import { Toaster } from "@/components/ui/toaster";
 import { Routes } from "react-router-dom";
-import { publicRoutes } from "./router/publicRoutes";
-import { privateRoutes } from "./router/privateRoutes";
 import { coreRouters } from "./core/routers";
+import { privateRoutes } from "./router/privateRoutes";
+import { publicRoutes } from "./router/publicRoutes";
 
 const App = () => {
   return (
-    <Routes>
-      {publicRoutes}
-      {privateRoutes}
-      {coreRouters}
-    </Routes>
+    <>
+      <Routes>
+        {publicRoutes}
+        {privateRoutes}
+        {coreRouters}
+      </Routes>
+      <Toaster />
+    </>
   );
 };
 
