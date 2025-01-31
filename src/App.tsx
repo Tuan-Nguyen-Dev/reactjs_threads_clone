@@ -1,12 +1,17 @@
-import React from 'react'
-import { Button } from './components/ui/button'
+import React from "react";
+import { Routes } from "react-router-dom";
+import { publicRoutes } from "./router/publicRoutes";
+import { privateRoutes } from "./router/privateRoutes";
+import { coreRouters } from "./core/routers";
 
 const App = () => {
   return (
-    <div>
-        <Button>Click me</Button>
-    </div>
-  )
-}
+    <Routes>
+      {publicRoutes}
+      {privateRoutes}
+      {coreRouters}
+    </Routes>
+  );
+};
 
-export default App
+export default App;
