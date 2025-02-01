@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { RoutesName } from "@/constants/route";
 import { useToast } from "@/hooks/use-toast";
-import { updateAuthStatus } from "@/stores/slices/authSlice";
 import { saveLocalRefeshToken, saveLocalToken } from "@/utils/auth";
 import { client } from "@/utils/client";
 import { Loader2 } from "lucide-react";
@@ -13,13 +12,11 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaFacebookSquare } from "react-icons/fa";
 import { IoLogoGoogle } from "react-icons/io5";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const {
     handleSubmit,
@@ -49,8 +46,6 @@ const Login = () => {
       console.log(data);
       saveLocalToken(data.access_token);
       saveLocalRefeshToken(data.refresh_token);
-
-      dispatch(updateAuthStatus(true));
 
       navigate("/");
     } catch {

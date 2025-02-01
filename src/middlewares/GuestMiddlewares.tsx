@@ -1,13 +1,22 @@
 import { RoutesName } from "@/constants/route";
-import { getLocalToken } from "@/utils/auth";
+import { getAuthProfile } from "@/stores/middlewares/authMiddleware";
+import { AppDispatch, RootState } from "@/stores/store";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 const GuestMiddlewares = () => {
-  const isAuth = getLocalToken() ? true : false;
+  const dispatch = useDispatch<AppDispatch>();
+  const { isAuth, isLoading } = useSelector((state: RootState) => state.auth);
+  useEffect(() => {
+    dispatch(getAuthProfile());
+  }, []);
+  if (isLoading) return null;
 
   if (isAuth) {
     return <Navigate to={RoutesName.HOME} />;
   }
+
   return <Outlet />;
 };
 
