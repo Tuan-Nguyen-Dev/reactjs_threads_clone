@@ -2,18 +2,22 @@ import { getLocalToken } from "@/utils/auth";
 import { client } from "@/utils/client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-
-export const getAuthProfile = createAsyncThunk("auth/profile", async (_, { rejectWithValue }) => {
+export const getAuthProfile = createAsyncThunk(
+  "auth/profile",
+  async (_, { rejectWithValue }) => {
     try {
-        const token = getLocalToken()
-        const { data: response } = await client.get("/auth/profile", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-        });
-        console.log(response.data)
-        return response.data
+      const token = getLocalToken();
+      if (!token) {
+        throw new Error("Unauthorized");
+      }
+      const { data: response } = await client.get("/auth/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
     } catch {
-        return rejectWithValue("Unauthorized")
+      return rejectWithValue("Unauthorized");
     }
-});
+  }
+);

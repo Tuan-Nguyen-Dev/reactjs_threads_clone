@@ -3,16 +3,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { MESSAGES } from "@/constants/message";
 import { RoutesName } from "@/constants/route";
 import { useToast } from "@/hooks/use-toast";
+import { requestLogin } from "@/services/authService";
 import { saveLocalRefeshToken, saveLocalToken } from "@/utils/auth";
-import { client } from "@/utils/client";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaFacebookSquare } from "react-icons/fa";
 import { IoLogoGoogle } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+
+const TIMEOUT = 1000;
 const Login = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -42,16 +45,21 @@ const Login = () => {
   }) => {
     setIsLoading(true);
     try {
-      const { data } = await client.post("/auth/login", { email, password });
-      console.log(data);
+      const data = await requestLogin({ email, password });
       saveLocalToken(data.access_token);
       saveLocalRefeshToken(data.refresh_token);
-
-      navigate("/");
+      toast({
+        title: MESSAGES.AUTH.AUTH_SUCCESSFUL,
+        className:
+          "fixed bottom-5 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:left-[50%] sm:translate-x-[-50%] sm:flex-col md:max-w-[420px]",
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, TIMEOUT);
     } catch {
       setIsLoading(false);
       toast({
-        title: "Username or password is incorrect",
+        title: MESSAGES.AUTH.UNAUTHENTICATED,
         className:
           "fixed bottom-5 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:left-[50%] sm:translate-x-[-50%] sm:flex-col md:max-w-[420px]",
       });
@@ -71,7 +79,7 @@ const Login = () => {
           {...register("username", {
             required: {
               value: true,
-              message: "This field is required",
+              message: MESSAGES.AUTH.USERNAME_INVALID,
             },
           })}
         />
@@ -82,7 +90,7 @@ const Login = () => {
           {...register("password", {
             required: {
               value: true,
-              message: "Password field is required",
+              message: MESSAGES.AUTH.PASSWORD_INVALID,
             },
           })}
         />
