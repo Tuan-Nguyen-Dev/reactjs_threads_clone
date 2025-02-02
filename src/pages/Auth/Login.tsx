@@ -50,8 +50,8 @@ const Login = () => {
       saveLocalRefeshToken(data.refresh_token);
       toast({
         title: MESSAGES.AUTH.AUTH_SUCCESSFUL,
-        className:
-          "fixed bottom-5 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:left-[50%] sm:translate-x-[-50%] sm:flex-col md:max-w-[420px]",
+        // className:
+        //   "fixed bottom-5 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:left-[50%] sm:translate-x-[-50%] sm:flex-col md:max-w-[420px]",
       });
       setTimeout(() => {
         navigate("/");
@@ -60,8 +60,8 @@ const Login = () => {
       setIsLoading(false);
       toast({
         title: MESSAGES.AUTH.UNAUTHENTICATED,
-        className:
-          "fixed bottom-5 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:left-[50%] sm:translate-x-[-50%] sm:flex-col md:max-w-[420px]",
+        // className:
+        //   "fixed bottom-5 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:left-[50%] sm:translate-x-[-50%] sm:flex-col md:max-w-[420px]",
       });
     }
   };
