@@ -5,7 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { MESSAGES } from "@/constants/message";
 import { RoutesName } from "@/constants/route";
 import { useToast } from "@/hooks/use-toast";
-import { requestRegister } from "@/services/authService";
+import { requestLogin, requestRegister } from "@/services/authService";
+import { saveLocalRefeshToken, saveLocalToken } from "@/utils/auth";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -39,11 +40,14 @@ const Register = () => {
   } = useForm<InputsType>();
 
   const onSubmit = async (formData: InputsType) => {
-    console.log(formData);
     try {
       setIsLoading(true);
-      const response = await requestRegister(formData);
-      console.log(response);
+      await requestRegister(formData);
+      const { email, password } = formData;
+      const data = await requestLogin({ email, password });
+      saveLocalToken(data.access_token);
+      saveLocalRefeshToken(data.refresh_token);
+
       toast({
         title: MESSAGES.AUTH.REGISTER_SUCCESSFUL,
       });
@@ -58,14 +62,13 @@ const Register = () => {
       });
     }
   };
-
   return (
     <div>
       <h2 className="text-center font-bold my-3 text-black">
         Register an account
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <div className="mb-5">
               <Input

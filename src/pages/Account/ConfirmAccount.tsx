@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,6 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { RoutesName } from "@/constants/route";
 import { useToast } from "@/hooks/use-toast";
+import { requestResendEmailActive } from "@/services/authService";
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
@@ -18,7 +20,21 @@ const ConfirmAccount = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const handleResendEmail = async () => {};
+  const handleResendEmail = async () => {
+    try {
+      setIsLoading(true);
+      await requestResendEmailActive();
+      toast({
+        title: "Resend Email Success",
+      });
+      setIsLoading(false);
+    } catch (error: any) {
+      toast({
+        title: "Resend Email Failed",
+      });
+      console.log(error);
+    }
+  };
   return (
     <AlertDialog open>
       <AlertDialogContent>
@@ -36,7 +52,7 @@ const ConfirmAccount = () => {
             Back to register
           </AlertDialogCancel>
           <AlertDialogAction onClick={handleResendEmail} disabled={isLoading}>
-            Re-send email
+            {isLoading ? "Resending..." : "Resend Email"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
