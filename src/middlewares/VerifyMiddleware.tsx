@@ -10,7 +10,7 @@ const VerifyMiddleware = () => {
   );
   const location = useLocation();
   if (isLoading) {
-    return;
+    return <span>Loading....</span>;
   }
   if (
     isAuth &&

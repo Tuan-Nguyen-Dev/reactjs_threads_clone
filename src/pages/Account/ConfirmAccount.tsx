@@ -10,15 +10,14 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { RoutesName } from "@/constants/route";
+import { useLogout } from "@/hooks/use-logout";
 import { useToast } from "@/hooks/use-toast";
 import { requestResendEmailActive } from "@/services/authService";
 import { useState } from "react";
 
-import { useNavigate } from "react-router-dom";
-
 const ConfirmAccount = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const { logout } = useLogout();
   const { toast } = useToast();
   const handleResendEmail = async () => {
     try {
@@ -50,8 +49,8 @@ const ConfirmAccount = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => navigate(RoutesName.AUTH_REGISTER)}>
-            Back to register
+          <AlertDialogCancel onClick={() => logout(RoutesName.AUTH_LOGIN)}>
+            Logout
           </AlertDialogCancel>
           <AlertDialogAction onClick={handleResendEmail} disabled={isLoading}>
             {isLoading ? "Resending..." : "Resend Email"}

@@ -51,8 +51,8 @@ export const requestActiveAccount = async (token: string) => {
 };
 
 export const requestLogout = async () => {
-  const accsessToken = getLocalToken();
-  if (!accsessToken) {
+  const accessToken = getLocalToken();
+  if (!accessToken) {
     throw new Error("Token is not available");
   }
   const data = await client.post(
@@ -60,7 +60,7 @@ export const requestLogout = async () => {
     {},
     {
       headers: {
-        Authorization: `Bearer ${accsessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );
