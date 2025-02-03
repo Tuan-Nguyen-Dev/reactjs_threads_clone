@@ -14,9 +14,11 @@ import { useForm } from "react-hook-form";
 import { FaFacebookSquare } from "react-icons/fa";
 import { IoLogoGoogle } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+import ForgotPassword from "./ForgotPassword";
 
 const TIMEOUT = 1000;
 const Login = () => {
+  const [openForgotPassword, setOpenForgotPassword] = useState<boolean>(false);
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -115,9 +117,14 @@ const Login = () => {
       </form>
 
       <div className="flex justify-center my-3">
-        <Link to="/forgot-password" className="text-gray-500">
+        <span
+          className="text-gray-500 cursor-pointer"
+          onClick={() => {
+            setOpenForgotPassword(true);
+          }}
+        >
           Forgot password?
-        </Link>
+        </span>
       </div>
 
       <div className="flex items-center justify-center py-2 gap-3">
@@ -141,6 +148,10 @@ const Login = () => {
           Register
         </Link>
       </div>
+      <ForgotPassword
+        isShow={openForgotPassword}
+        onOpenChange={() => setOpenForgotPassword(false)}
+      />
     </div>
   );
 };

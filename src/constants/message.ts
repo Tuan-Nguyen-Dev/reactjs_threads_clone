@@ -17,5 +17,7 @@ export const MESSAGES = {
       "Register successful. Please check your email to activate your account",
     REGISTER_FAILED: "Register failed",
     ACTIVE_ACCOUNT_FAILED: "Active account failed",
+    FORGOT_PASSWORD: "Please check your email to reset password",
+    FORGOT_PASSWORD_FAILED: "Forgot password failed",
   },
 };

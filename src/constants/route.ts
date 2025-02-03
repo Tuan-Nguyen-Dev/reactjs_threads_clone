@@ -14,4 +14,5 @@ export enum RoutesName {
   ACCOUNT = "/account",
   ACTIVE_ACCOUNT = "/active-account",
   CONFIRM_ACCOUNT = "/account/confirm",
+  RESET_PASSWORD = "/reset-password",
 }

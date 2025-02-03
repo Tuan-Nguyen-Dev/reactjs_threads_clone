@@ -60,6 +60,7 @@ const Register = () => {
       toast({
         title: MESSAGES.AUTH.REGISTER_FAILED,
       });
+      console.log(error);
     }
   };
   return (
