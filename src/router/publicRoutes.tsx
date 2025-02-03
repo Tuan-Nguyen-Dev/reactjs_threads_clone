@@ -6,6 +6,7 @@ import VerifyMiddleware from "@/middlewares/VerifyMiddleware";
 import ActiveAccount from "@/pages/Account/ActiveAccount";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
+import ResetPassword from "@/pages/Auth/ResetPassword";
 import Home from "@/pages/Home/Home";
 import Search from "@/pages/Search/Search";
 import { Route } from "react-router-dom";
@@ -24,6 +25,10 @@ export const publicRoutes = (
       <Route element={<AuthLayout />}>
         <Route path={RoutesName.AUTH_LOGIN} element={<Login />} />
         <Route path={RoutesName.AUTH_REGISTER} element={<Register />} />
+        <Route
+          path={RoutesName.AUTH_RESET_PASSWORD}
+          element={<ResetPassword />}
+        />
       </Route>
     </Route>
   </>

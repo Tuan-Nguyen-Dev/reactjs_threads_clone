@@ -70,7 +70,24 @@ export const requestLogout = async () => {
 export const requestForgotPassword = async (email: string) => {
   const data = await client.post("/forgot-password", {
     email,
-    url_target: window.location.origin + RoutesName.RESET_PASSWORD,
+    url_target: window.location.origin + RoutesName.AUTH_RESET_PASSWORD,
+  });
+  return data;
+};
+
+export const requestResetPassword = async ({
+  password,
+  password_confirmation,
+  token,
+}: {
+  password: string;
+  password_confirmation: string;
+  token: string | null;
+}) => {
+  const data = await client.patch(`/reset-password`, {
+    password,
+    password_confirmation,
+    token,
   });
   console.log(data);
   return data;

@@ -24,13 +24,10 @@ interface ModelOpenForgotPassword {
 interface InputsType {
   email: string;
 }
-interface ServerError {
-  key: string;
-}
+
 const ForgotPassword = (props: ModelOpenForgotPassword) => {
   const { isShow, onOpenChange } = props;
   const [isLoading, setIsLoading] = useState(false);
-  const [serverErrors, setServerErrors] = useState<ServerError>();
   const { toast } = useToast();
   const {
     handleSubmit,
@@ -49,14 +46,11 @@ const ForgotPassword = (props: ModelOpenForgotPassword) => {
       setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
-      setServerErrors(error.response.data.message);
       toast({
-        title: MESSAGES.AUTH.FORGOT_PASSWORD_FAILED,
+        title: error.response.data.message,
       });
-      console.log(error);
     }
   };
-  console.log(serverErrors);
   return (
     <Dialog open={isShow} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
@@ -92,9 +86,9 @@ const ForgotPassword = (props: ModelOpenForgotPassword) => {
                   {errors.email.message}
                 </p>
               )}
-              {serverErrors && (
-                <p className="text-red-500 text-sm mt-2">{serverErrors.key}</p>
-              )}
+              {/* {serverErrors && (
+                <p className="text-red-500 text-sm mt-2">{serverErrors}</p>
+              )} */}
             </div>
           </div>
           <DialogFooter>
