@@ -5,6 +5,7 @@ interface AuthState {
   isAuth: boolean;
   user: null | {
     name: string;
+    status: boolean;
   };
   isLoading: boolean;
 }

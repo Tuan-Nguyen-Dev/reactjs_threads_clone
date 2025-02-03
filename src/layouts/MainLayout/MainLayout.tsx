@@ -10,6 +10,7 @@ const MainLayout = () => {
   useEffect(() => {
     dispatch(getAuthProfile());
   }, []);
+
   return (
     <div className="main-layout mx-auto w-[80%] py-3">
       <Outlet />

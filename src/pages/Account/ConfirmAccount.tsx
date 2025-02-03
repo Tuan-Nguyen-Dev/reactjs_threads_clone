@@ -33,6 +33,8 @@ const ConfirmAccount = () => {
         title: "Resend Email Failed",
       });
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (

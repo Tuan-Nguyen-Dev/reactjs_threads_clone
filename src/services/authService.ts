@@ -41,3 +41,28 @@ export const requestResendEmailActive = async () => {
   );
   return data;
 };
+
+export const requestActiveAccount = async (token: string) => {
+  const data = await client.patch("/confirm-account", {
+    token,
+  });
+  console.log(data);
+  return data;
+};
+
+export const requestLogout = async () => {
+  const accsessToken = getLocalToken();
+  if (!accsessToken) {
+    throw new Error("Token is not available");
+  }
+  const data = await client.post(
+    "/auth/logout",
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${accsessToken}`,
+      },
+    }
+  );
+  return data;
+};
