@@ -19,5 +19,7 @@ export const MESSAGES = {
     ACTIVE_ACCOUNT_FAILED: "Active account failed",
     FORGOT_PASSWORD: "Please check your email to reset password",
     FORGOT_PASSWORD_FAILED: "Forgot password failed",
+    RESET_PASSWORD_FAILED: "Reset password failed",
+    RESET_PASSWORD_SUCCESSFUL: "Reset password successful",
   },
 };

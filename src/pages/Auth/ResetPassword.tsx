@@ -5,6 +5,8 @@ import { RoutesName } from "@/constants/route";
 import { useToast } from "@/hooks/use-toast";
 import { requestResetPassword } from "@/services/authService";
 import { Separator } from "@radix-ui/react-separator";
+import { AxiosError } from "axios";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaFacebookSquare } from "react-icons/fa";
@@ -20,7 +22,6 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  console.log(token);
   const navigate = useNavigate();
   const { toast } = useToast();
   const {
@@ -30,92 +31,107 @@ const ResetPassword = () => {
     formState: { errors },
   } = useForm<InputsType>();
 
+  const onSubmit = async (formData: InputsType) => {
+    try {
+      console.log(formData);
+      setIsLoading(true);
+      await requestResetPassword({ ...formData, token });
+      toast({
+        title: MESSAGES.AUTH.RESET_PASSWORD_SUCCESSFUL,
+      });
+      setTimeout(() => {
+        navigate(RoutesName.AUTH_LOGIN);
+      }, 1000);
+      setIsLoading(false);
+    } catch (error) {
+      const err = error as AxiosError;
+      if (err.status === 401) {
+        const data = err.response?.data as { message: string };
+        return toast({
+          title: data.message,
+        });
+      }
+      toast({
+        title: MESSAGES.AUTH.RESET_PASSWORD_FAILED,
+      });
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!token) {
       navigate(RoutesName.AUTH_LOGIN);
     }
   }, []);
-
-  const onSubmit = async (formData: InputsType) => {
-    try {
-      setIsLoading(true);
-      await requestResetPassword({ ...formData, token });
-      toast({
-        title: "Reset Password Success",
-      });
-      // setIsLoading(false);
-    } catch {
-      setIsLoading(false);
-      // console.log(error);
-    }
-  };
   return (
     <div>
       <h2 className="text-center font-bold my-3 text-black">Reset Password</h2>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 gap-4">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <div className="mb-5">
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  className="px-4 py-6 bg-[rgb(245,245,245)]"
-                  {...register("password", {
-                    required: {
-                      value: true,
-                      message: MESSAGES.AUTH.PASSWORD_INVALID,
-                    },
-                    minLength: {
-                      value: 6,
-                      message: MESSAGES.AUTH.PASSWORD_TOO_SHORT,
-                    },
-                  })}
-                />
-                {errors.password && (
-                  <p className="text-red-500 text-sm">
-                    {errors.password.message}
-                  </p>
-                )}
-                {/* {serverErrors.password && (
+          <div>
+            <div className="mb-5">
+              <Input
+                type="password"
+                placeholder="Password"
+                className="px-4 py-6 bg-[rgb(245,245,245)]"
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: MESSAGES.AUTH.PASSWORD_INVALID,
+                  },
+                  minLength: {
+                    value: 6,
+                    message: MESSAGES.AUTH.PASSWORD_TOO_SHORT,
+                  },
+                })}
+              />
+              {errors.password && (
                 <p className="text-red-500 text-sm">
-                  {serverErrors.password[0]}
+                  {errors.password.message}
                 </p>
-              )} */}
-              </div>
-
-              <div className="mb-5">
-                <Input
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="px-4 py-6 bg-[rgb(245,245,245)]"
-                  {...register("password_confirmation", {
-                    required: {
-                      value: true,
-                      message: MESSAGES.AUTH.CONFIRM_PASSWORD,
-                    },
-                    validate: (value) =>
-                      value === watch("password") ||
-                      MESSAGES.AUTH.CONFIRM_PASSWORD_INVALID,
-                  })}
-                />
-                {errors.password_confirmation && (
-                  <p className="text-red-500 text-sm">
-                    {errors.password_confirmation.message}
-                  </p>
-                )}
-              </div>
+              )}
             </div>
-          </form>
+
+            <div className="mb-5">
+              <Input
+                type="password"
+                placeholder="Confirm Password"
+                className="px-4 py-6 bg-[rgb(245,245,245)]"
+                {...register("password_confirmation", {
+                  required: {
+                    value: true,
+                    message: MESSAGES.AUTH.CONFIRM_PASSWORD,
+                  },
+                  validate: (value) =>
+                    value === watch("password") ||
+                    MESSAGES.AUTH.CONFIRM_PASSWORD_INVALID,
+                })}
+              />
+              {errors.password_confirmation && (
+                <p className="text-red-500 text-sm">
+                  {errors.password_confirmation.message}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
 
         <Button
           size={null}
           className="w-full py-4 disabled:cursor-not-allowed disabled:opacity-100 disabled:text-[gray]"
           type="submit"
-          disabled={isLoading}
+          disabled={Object.keys(errors).length > 0 || isLoading}
         >
-          Reset Password
+          {isLoading ? (
+            <div className="flex justify-center items-center gap-2">
+              <Loader2 className="animate-spin" />
+              <span>Registering...</span>
+            </div>
+          ) : (
+            <small className="text-sm font-medium leading-none">
+              Reset New Password
+            </small>
+          )}
         </Button>
       </form>
 

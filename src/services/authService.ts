@@ -89,6 +89,5 @@ export const requestResetPassword = async ({
     password_confirmation,
     token,
   });
-  console.log(data);
   return data;
 };
