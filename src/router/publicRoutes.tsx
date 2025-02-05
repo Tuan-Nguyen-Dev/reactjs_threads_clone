@@ -24,6 +24,7 @@ export const publicRoutes = (
     <Route element={<GuestMiddlewares />}>
       <Route element={<AuthLayout />}>
         <Route path={RoutesName.AUTH_LOGIN} element={<Login />} />
+        {/* <Route path={RoutesName.GOOGLE_CALLBACK} element={<GoogleCallBack />} /> */}
         <Route path={RoutesName.AUTH_REGISTER} element={<Register />} />
         <Route
           path={RoutesName.AUTH_RESET_PASSWORD}

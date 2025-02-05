@@ -11,10 +11,11 @@ import { saveLocalRefeshToken, saveLocalToken } from "@/utils/auth";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaFacebookSquare } from "react-icons/fa";
+import { FaFacebookSquare, FaGithub } from "react-icons/fa";
 import { IoLogoGoogle } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
+import { getGoogleRedirectUrl } from "@/services/socialService";
 
 const TIMEOUT = 1000;
 const Login = () => {
@@ -32,11 +33,10 @@ const Login = () => {
     mode: "onChange",
   });
 
-  useEffect(() => {
-    trigger(["username", "password"], {
-      shouldFocus: true,
-    });
-  }, []);
+  const handleLoginGoogle = () => {
+    const redirectUrl = getGoogleRedirectUrl();
+    window.location.href = redirectUrl;
+  };
 
   const onSubmit = async ({
     username: email,
@@ -67,6 +67,12 @@ const Login = () => {
       });
     }
   };
+
+  useEffect(() => {
+    trigger(["username", "password"], {
+      shouldFocus: true,
+    });
+  }, []);
 
   return (
     <div>
@@ -134,10 +140,14 @@ const Login = () => {
       </div>
       <div className="flex items-center justify-between gap-5 my-3">
         <Button variant="outline" className="w-full">
-          <FaFacebookSquare />
-          Facebook
+          <FaGithub />
+          Github
         </Button>
-        <Button variant="outline" className="w-full">
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={handleLoginGoogle}
+        >
           <IoLogoGoogle />
           Google
         </Button>
