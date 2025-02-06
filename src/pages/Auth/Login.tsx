@@ -15,7 +15,10 @@ import { FaFacebookSquare, FaGithub } from "react-icons/fa";
 import { IoLogoGoogle } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
-import { getGoogleRedirectUrl } from "@/services/socialService";
+import {
+  getGithubRedirectUrl,
+  getGoogleRedirectUrl,
+} from "@/services/socialService";
 
 const TIMEOUT = 1000;
 const Login = () => {
@@ -35,6 +38,11 @@ const Login = () => {
 
   const handleLoginGoogle = () => {
     const redirectUrl = getGoogleRedirectUrl();
+    window.location.href = redirectUrl;
+  };
+
+  const handleLoginGithub = () => {
+    const redirectUrl = getGithubRedirectUrl();
     window.location.href = redirectUrl;
   };
 
@@ -139,7 +147,11 @@ const Login = () => {
         <Separator className="w-10" />
       </div>
       <div className="flex items-center justify-between gap-5 my-3">
-        <Button variant="outline" className="w-full">
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={handleLoginGithub}
+        >
           <FaGithub />
           Github
         </Button>
