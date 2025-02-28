@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { CONSTANTS } from "@/constants/const";
 import { MESSAGES } from "@/constants/message";
 import { RoutesName } from "@/constants/route";
 import { useToast } from "@/hooks/use-toast";
@@ -53,7 +54,7 @@ const Register = () => {
       });
       setTimeout(() => {
         navigate(RoutesName.CONFIRM_ACCOUNT);
-      }, 1000);
+      }, CONSTANTS.TIMEOUT);
     } catch (error: any) {
       setIsLoading(false);
       setServerErrors(error.response.data.errors);
@@ -69,7 +70,7 @@ const Register = () => {
         Register an account
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
           <div>
             <div className="mb-5">
               <Input

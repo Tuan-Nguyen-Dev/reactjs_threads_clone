@@ -11,7 +11,7 @@ const AuthLayout = () => {
           "--image-url": `url(${authBg})`,
         } as React.CSSProperties
       }
-      className={`min-h-screen flex items-center justify-center bg-no-repeat bg-none lg:bg-[center_-30%] lg:bg:[length:110%] lg:bg-[image:var(--image-url)] xl:bg-contain`}
+      className={` min-h-screen flex items-center justify-center bg-no-repeat bg-none lg:bg-[center_-30%] lg:bg:[length:110%] lg:bg-[image:var(--image-url)] xl:bg-contain`}
     >
       <div
         style={{
@@ -23,8 +23,8 @@ const AuthLayout = () => {
         <Outlet />
       </div>
 
-      <ul className="flex flex-wrap justify-center gap-3 sm:gap-3 text-gray-500 text-xs sm:text-sm px-4 pt-5 w-full text-center absolute bottom-5 right-0 left-0">
-        <li className="w-full sm:w-auto">© 2025</li>
+      <ul className="flex flex-wrap mb-auto justify-center gap-3 sm:gap-3 text-gray-500 text-xs sm:text-sm px-4 py-5 w-full text-center absolute bottom-0 right-0 left-0">
+        <li className="w-full sm:w-auto">© {`${new Date().getFullYear()}`}</li>
         <li>
           <Link className="hover:underline whitespace-nowrap" to={"#"}>
             Threads Terms

@@ -3,24 +3,24 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { CONSTANTS } from "@/constants/const";
 import { MESSAGES } from "@/constants/message";
 import { RoutesName } from "@/constants/route";
 import { useToast } from "@/hooks/use-toast";
 import { requestLogin } from "@/services/authService";
-import { saveLocalRefeshToken, saveLocalToken } from "@/utils/auth";
-import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { FaFacebookSquare, FaGithub } from "react-icons/fa";
-import { IoLogoGoogle } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
-import ForgotPassword from "./ForgotPassword";
 import {
   getGithubRedirectUrl,
   getGoogleRedirectUrl,
 } from "@/services/socialService";
+import { saveLocalRefeshToken, saveLocalToken } from "@/utils/auth";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaGithub } from "react-icons/fa";
+import { IoLogoGoogle } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
+import ForgotPassword from "./ForgotPassword";
 
-const TIMEOUT = 1000;
 const Login = () => {
   const [openForgotPassword, setOpenForgotPassword] = useState<boolean>(false);
   const { toast } = useToast();
@@ -65,7 +65,7 @@ const Login = () => {
       });
       setTimeout(() => {
         navigate("/");
-      }, TIMEOUT);
+      }, CONSTANTS.TIMEOUT);
     } catch {
       setIsLoading(false);
       toast({

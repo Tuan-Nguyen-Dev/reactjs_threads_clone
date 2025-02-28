@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CONSTANTS } from "@/constants/const";
 import { MESSAGES } from "@/constants/message";
 import { RoutesName } from "@/constants/route";
 import { useToast } from "@/hooks/use-toast";
@@ -41,7 +42,7 @@ const ResetPassword = () => {
       });
       setTimeout(() => {
         navigate(RoutesName.AUTH_LOGIN);
-      }, 1000);
+      }, CONSTANTS.TIMEOUT);
       setIsLoading(false);
     } catch (error) {
       const err = error as AxiosError;

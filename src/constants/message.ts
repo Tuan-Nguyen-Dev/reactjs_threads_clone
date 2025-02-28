@@ -12,7 +12,7 @@ export const MESSAGES = {
     EMAIL_INVALID: "Email is required",
     EMAIL_INVALID_FORMAT: "Invalid email address",
     PHONE_INVALID: "Phone number is required",
-    PHONE_INVALID_FORMAT: "Phone number is required",
+    PHONE_INVALID_FORMAT: "Phone number is format",
     REGISTER_SUCCESSFUL:
       "Register successful. Please check your email to activate your account",
     REGISTER_FAILED: "Register failed",
@@ -21,5 +21,7 @@ export const MESSAGES = {
     FORGOT_PASSWORD_FAILED: "Forgot password failed",
     RESET_PASSWORD_FAILED: "Reset password failed",
     RESET_PASSWORD_SUCCESSFUL: "Reset password successful",
+    RESEND_ACTIVE_EMAIL_SUCCESSFUL: "Resend Email Success",
+    RESEND_ACTIVE_EMAIL_FAILED: "Resend Email Failed",
   },
 };

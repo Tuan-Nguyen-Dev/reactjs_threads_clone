@@ -9,6 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { MESSAGES } from "@/constants/message";
 import { RoutesName } from "@/constants/route";
 import { useLogout } from "@/hooks/use-logout";
 import { useToast } from "@/hooks/use-toast";
@@ -24,12 +25,12 @@ const ConfirmAccount = () => {
       setIsLoading(true);
       await requestResendEmailActive();
       toast({
-        title: "Resend Email Success",
+        title: MESSAGES.AUTH.RESEND_ACTIVE_EMAIL_SUCCESSFUL,
       });
       setIsLoading(false);
     } catch (error: any) {
       toast({
-        title: "Resend Email Failed",
+        title: MESSAGES.AUTH.RESEND_ACTIVE_EMAIL_FAILED,
       });
       console.log(error);
     } finally {
