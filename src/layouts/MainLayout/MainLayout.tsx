@@ -14,9 +14,9 @@ const MainLayout = () => {
   }, []);
 
   return (
-    <div className="main-layout mx-auto py-3 flex">
+    <div className="main-layout py-3 mx-auto flex">
       <Nav />
-      <div className="w-[80%] mx-auto">
+      <div className="flex w-[70%] mx-auto">
         <Outlet />
       </div>
     </div>

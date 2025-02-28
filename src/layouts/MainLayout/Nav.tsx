@@ -1,14 +1,14 @@
 import { RoutesName } from "@/constants/route";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { BiMenuAltLeft } from "react-icons/bi";
+import { BsPin } from "react-icons/bs";
 import { CiHeart, CiUser } from "react-icons/ci";
 import { FaHeart, FaUber } from "react-icons/fa";
 import { GoHome, GoHomeFill, GoPlus } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
-import { BsPin } from "react-icons/bs";
-import { BiMenuAltLeft } from "react-icons/bi";
 import DropDown from "./DropDown";
-import { ReactNode, useState } from "react";
 import PinContent from "./dropdown-content/PinContent";
 import SettingContent from "./dropdown-content/SettingContent";
 const menuItems = [
@@ -42,11 +42,10 @@ const Nav = () => {
   const { pathname } = useLocation();
 
   const isActive = (url: string) => pathname === url;
-  const [isOpenDropDown, setIsOpenDropDown] = useState<boolean>(false);
-  const [dropDownContent, setDropDownContent] = useState<null | ReactNode>(
-    null
-  );
-
+  const [isOpenDrowndown, setIsOpenDropdown] = useState(false);
+  const [dropdownContent, setDropdownContent] =
+    useState<null | React.ReactNode>(null);
+  const [isOpenSubDropdown, setIsOpenSubDropdown] = useState(false);
   return (
     <div className="flex flex-col w-[80px] justify-between items-center fixed top-5 bottom-5 left-0">
       <div>
@@ -86,8 +85,14 @@ const Nav = () => {
               fill="rgb(184,184,184)"
               className="cursor-pointer hover:fill-black"
               onClick={() => {
-                setIsOpenDropDown(!isOpenDropDown);
-                setDropDownContent(() => <PinContent />);
+                setIsOpenDropdown(true);
+                setDropdownContent(
+                  <PinContent
+                    onOpenDropdown={(value) => {
+                      setIsOpenSubDropdown(value);
+                    }}
+                  />
+                );
               }}
             />
           </li>
@@ -97,16 +102,23 @@ const Nav = () => {
               fill="rgb(184,184,184)"
               className="cursor-pointer hover:fill-black"
               onClick={() => {
-                setIsOpenDropDown(!isOpenDropDown);
-                setDropDownContent(() => <SettingContent />);
+                setIsOpenDropdown(true);
+                setDropdownContent(<SettingContent />);
               }}
             />
           </li>
         </ul>
-        <DropDown isOpen={isOpenDropDown} onOpenChange={setIsOpenDropDown}>
-          {dropDownContent}
-        </DropDown>
       </div>
+      <DropDown
+        isOpen={isOpenDrowndown}
+        onOpenChange={() => {
+          if (!isOpenSubDropdown) {
+            setIsOpenDropdown(false);
+          }
+        }}
+      >
+        {dropdownContent}
+      </DropDown>
     </div>
   );
 };
